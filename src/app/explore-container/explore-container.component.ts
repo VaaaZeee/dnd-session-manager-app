@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TestFirebaseService } from '../core/services/testFirebase.service';
 
 @Component({
   selector: 'dnd-explore-container',
@@ -7,4 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ExploreContainerComponent {
   @Input() name?: string;
+  public testData$ = this.testFirebaseService.testDB();
+
+  constructor(private readonly testFirebaseService: TestFirebaseService) {}
 }
