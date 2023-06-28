@@ -1,5 +1,7 @@
 {
   "name": "dnd-session-manager",
-  "integrations": {},
-  "type": "angular-standalone"
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
 }

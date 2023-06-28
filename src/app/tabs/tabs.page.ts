@@ -1,15 +1,10 @@
-import { Component, EnvironmentInjector, inject } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'dnd-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
-  standalone: true,
-  imports: [IonicModule],
 })
 export class TabsPage {
-  public environmentInjector = inject(EnvironmentInjector);
-
   constructor() {}
 }
