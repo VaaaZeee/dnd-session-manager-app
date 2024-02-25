@@ -1,0 +1,29 @@
+<ion-list>
+  <ion-item>
+    <ion-input
+      labelPlacement="stacked"
+      [label]="label"
+      [type]="type"
+      [placeholder]="placeholder"
+    >
+      <ion-icon
+        *ngIf="startIcon"
+        slot="start"
+        [name]="startIcon"
+        aria-hidden="true"
+      ></ion-icon>
+      <ion-button
+        *ngIf="endIcon"
+        fill="clear"
+        slot="end"
+        (click)="endIconClicked.next()"
+      >
+        <ion-icon
+          slot="icon-only"
+          [name]="endIcon"
+          aria-hidden="true"
+        ></ion-icon>
+      </ion-button>
+    </ion-input>
+  </ion-item>
+</ion-list>

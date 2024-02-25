@@ -1,0 +1,21 @@
+<div
+  class="container"
+  *ngIf="{ showPassword: !!(showPassword$ | async) } as data"
+>
+  <div class="login-form-container">
+    <dnd-form-input
+      [startIcon]="'mail'"
+      [label]="'E-mail'"
+      [type]="'email'"
+      [placeholder]="'your.email@gmail.com'"
+    ></dnd-form-input>
+    <dnd-form-input
+      [startIcon]="'lock-closed'"
+      [label]="'Password'"
+      [placeholder]="'password'"
+      [type]="data.showPassword ? 'text' : 'password'"
+      [endIcon]="data.showPassword ? 'eye-off' : 'eye'"
+      (endIconClicked)="toggleShowPassword()"
+    ></dnd-form-input>
+  </div>
+</div>
