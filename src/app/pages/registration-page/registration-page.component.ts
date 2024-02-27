@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Subject, scan, startWith, tap } from 'rxjs';
+import { Subject, scan } from 'rxjs';
 
 @Component({
-  selector: 'dnd-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+  selector: 'dnd-registration-page',
+  templateUrl: './registration-page.component.html',
+  styleUrls: ['./registration-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginPageComponent {
+export class RegistrationPageComponent {
   private toggleShowPassword$ = new Subject<void>();
   protected showPassword$ = this.toggleShowPassword$
     .asObservable()

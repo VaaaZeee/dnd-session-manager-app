@@ -1,0 +1,47 @@
+<div
+  class="container"
+  *ngIf="{ showPassword: !!(showPassword$ | async) } as data"
+>
+  <div class="registration-form-container">
+    <div class="title-container">
+      <span class="title">Registration</span>
+    </div>
+    <div class="input-container">
+      <dnd-form-input
+        [startIcon]="'mail'"
+        [label]="'E-mail'"
+        [type]="'email'"
+        [placeholder]="'your.email@gmail.com'"
+      ></dnd-form-input>
+      <dnd-form-input
+        [startIcon]="'person'"
+        [label]="'User name'"
+        [type]="'text'"
+        [placeholder]="'UserName'"
+      ></dnd-form-input>
+      <dnd-form-input
+        [startIcon]="'lock-closed'"
+        [label]="'Password'"
+        [placeholder]="'password'"
+        [type]="data.showPassword ? 'text' : 'password'"
+        [endIcon]="data.showPassword ? 'eye-off' : 'eye'"
+        (endIconClicked)="toggleShowPassword()"
+      ></dnd-form-input>
+      <dnd-form-input
+        [startIcon]="'lock-closed'"
+        [label]="'Confirm password'"
+        [placeholder]="'password'"
+        [type]="data.showPassword ? 'text' : 'password'"
+        [endIcon]="data.showPassword ? 'eye-off' : 'eye'"
+        (endIconClicked)="toggleShowPassword()"
+      ></dnd-form-input>
+    </div>
+    <ion-button
+      class="registration-button"
+      size="small"
+      shape="round"
+      color="primary"
+      ><span class="registration-button-text">Register</span></ion-button
+    >
+  </div>
+</div>
