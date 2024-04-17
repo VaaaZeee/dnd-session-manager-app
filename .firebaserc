@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "dnd-session-manager"
+  },
+  "targets": {
+    "dnd-session-manager": {
+      "hosting": {
+        "app": [
+          "dnd-session-manager"
+        ]
+      }
+    }
   }
 }
