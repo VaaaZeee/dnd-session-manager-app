@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TestFirebaseService } from '../core/services/testFirebase.service';
+import { TestFirebaseService } from '../core/services/test/testFirebase.service';
 
 @Component({
   selector: 'dnd-explore-container',

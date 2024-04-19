@@ -5,6 +5,7 @@
       [label]="label"
       [type]="type"
       [placeholder]="placeholder"
+      (ionInput)="inputValueChange($event.detail.value ?? '')"
     >
       <ion-icon
         *ngIf="startIcon"

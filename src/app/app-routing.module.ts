@@ -1,25 +1,37 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { loggedOutGuard } from '@core/guards/auth-guards';
+import { PAGES } from './app-route-enums';
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: PAGES.HOME,
+    loadChildren: () =>
+      import('./pages/home-page/home-page.module').then(
+        (m) => m.HomePageModule
+      ),
+    /* canActivateChild: [authGuard], */
+  },
+  {
+    path: PAGES.LOGIN,
     loadChildren: () =>
       import('./pages/login-page/login-page.module').then(
         (m) => m.LoginPageModule
       ),
+    canActivateChild: [loggedOutGuard],
   },
   {
-    path: 'registration',
+    path: PAGES.REGISTRATION,
     loadChildren: () =>
       import('./pages/registration-page/registration-page.module').then(
         (m) => m.RegistrationPageModule
       ),
+    canActivateChild: [loggedOutGuard],
   },
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'registration',
+    redirectTo: PAGES.HOME,
   },
 ];
 @NgModule({
