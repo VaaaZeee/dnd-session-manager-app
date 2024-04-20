@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { loggedOutGuard } from '@core/guards/auth-guards';
+import { authGuard, loggedOutGuard } from '@core/guards/auth-guards';
 import { PAGES } from './app-route-enums';
 
 const routes: Routes = [
@@ -10,7 +10,7 @@ const routes: Routes = [
       import('./pages/home-page/home-page.module').then(
         (m) => m.HomePageModule
       ),
-    /* canActivateChild: [authGuard], */
+    canActivateChild: [authGuard],
   },
   {
     path: PAGES.LOGIN,

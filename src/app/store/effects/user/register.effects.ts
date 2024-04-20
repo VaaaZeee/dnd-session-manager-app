@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   startRegisterUserAction,
@@ -14,8 +13,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 export class RegisterEffects {
   constructor(
     private readonly actions$: Actions,
-    private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly authService: AuthService
   ) {}
 
   registerUser$ = createEffect(() => {
@@ -29,14 +27,4 @@ export class RegisterEffects {
       catchError(() => of(userRegistrationFailAction()))
     );
   });
-
-  navigateToHomePage$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(userRegistrationSuccessAction),
-        map(() => this.router.navigateByUrl('/'))
-      );
-    },
-    { dispatch: false }
-  );
 }

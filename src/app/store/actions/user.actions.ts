@@ -14,3 +14,17 @@ export const userRegistrationSuccessAction = createAction(
 export const userRegistrationFailAction = createAction(
   '[Register] User registration fail action'
 );
+
+export const startLoginUserAction = createAction(
+  '[Login] Start login user action',
+  props<{ email: string; password: string }>()
+);
+
+export const userLoginSuccessAction = createAction(
+  '[Login] User login success action',
+  props<{ user: UserData }>()
+);
+
+export const userLoginFailAction = createAction(
+  '[Login] User login fail action'
+);

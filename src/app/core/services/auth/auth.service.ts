@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Nullable } from '@models/nullable';
 import { UserData } from '@models/userData';
-import { isStrictDefined } from '@utils/is-strict-defined';
-import { Observable, filter, from, map, switchMap } from 'rxjs';
+import { Observable, from, map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +17,16 @@ export class AuthService {
     email: string,
     password: string,
     userName: string
-  ): Observable<Nullable<UserData>> {
+  ): Observable<UserData> {
     return from(
       this.afAuth.createUserWithEmailAndPassword(email, password)
     ).pipe(
-      map(({ user }) => user),
-      filter(isStrictDefined),
+      map(({ user }) => {
+        if (!user) {
+          throw new Error('The account could not be created');
+        }
+        return user;
+      }),
       switchMap((user: UserData) =>
         from(user.updateProfile({ displayName: userName })).pipe(
           map(() => user)
@@ -36,9 +38,14 @@ export class AuthService {
   public loginWithEmailAndPassword(
     email: string,
     password: string
-  ): Observable<Nullable<UserData>> {
+  ): Observable<UserData> {
     return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
-      map(({ user }) => user)
+      map(({ user }) => {
+        if (!user) {
+          throw new Error('User not found');
+        }
+        return user;
+      })
     );
   }
 
