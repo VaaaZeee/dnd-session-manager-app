@@ -28,3 +28,5 @@ export const userLoginSuccessAction = createAction(
 export const userLoginFailAction = createAction(
   '[Login] User login fail action'
 );
+
+export const logoutUserAction = createAction('[Nav bar] Log out user');

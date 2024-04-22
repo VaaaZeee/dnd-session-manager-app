@@ -31,7 +31,7 @@
     "@ngrx/effects": "^17.2.0",
     "@ngrx/store": "^17.2.0",
     "@ngrx/store-devtools": "^17.2.0",
-    "firebase": "^9.23.0",
+    "firebase": "^10.11.0",
     "ionicons": "^7.1.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.6.0",
@@ -51,7 +51,7 @@
     "@ionic/angular-toolkit": "^9.0.0",
     "@ngrx/eslint-plugin": "^17.2.0",
     "@types/jasmine": "~4.3.0",
-    "@types/node": "^12.20.55",
+    "@types/node": "^20.12.7",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
     "eslint": "^8.57.0",
@@ -66,8 +66,8 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "ts-node": "^8.10.2",
-    "typescript": "~5.3.3"
+    "ts-node": "^10.9.2",
+    "typescript": "~5.4.5"
   },
   "description": "An Ionic project"
 }

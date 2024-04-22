@@ -5,10 +5,10 @@ import { PAGES } from './app-route-enums';
 
 const routes: Routes = [
   {
-    path: PAGES.HOME,
+    path: PAGES.MAIN,
     loadChildren: () =>
-      import('./pages/home-page/home-page.module').then(
-        (m) => m.HomePageModule
+      import('./pages/main-page/main-page.module').then(
+        (m) => m.MainPageModule
       ),
     canActivateChild: [authGuard],
   },
@@ -31,7 +31,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: PAGES.HOME,
+    redirectTo: PAGES.LOGIN,
   },
 ];
 @NgModule({

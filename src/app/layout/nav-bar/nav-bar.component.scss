@@ -1,0 +1,62 @@
+@use "variables" as *;
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 3rem;
+  background-color: $primaryColor;
+  align-items: center;
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    color: $fontColor;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    ion-icon {
+      --ionicon-stroke-width: 3rem;
+    }
+  }
+
+  .align-right {
+    margin-left: auto;
+  }
+
+  .logout-button {
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    position: relative;
+
+    .logout-label {
+      margin-right: 0.25rem;
+    }
+
+    transition: all 0.35s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 75%;
+      height: 2px;
+      bottom: 0;
+      left: 9%;
+      background-color: $fontColor;
+      visibility: hidden;
+      -webkit-transform: scaleX(0);
+      transform: scaleX(0);
+      -webkit-transition: all 0.3s ease-in-out 0s;
+      transition: all 0.3s ease-in-out 0s;
+    }
+
+    &:hover {
+      color: $fontColor;
+
+      &::before {
+        visibility: visible;
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+      }
+    }
+  }
+}

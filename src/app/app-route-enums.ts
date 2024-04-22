@@ -1,5 +1,5 @@
 export enum PAGES {
-  HOME = '',
+  MAIN = '',
   LOGIN = 'login',
   REGISTRATION = 'registration',
 }

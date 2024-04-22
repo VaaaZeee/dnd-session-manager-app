@@ -1,13 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { UserData } from '@models/userData';
-import { Observable, from, map, switchMap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import {
+  startLoginUserAction,
+  userLoginFailAction,
+} from '@store/actions/user.actions';
+import { Observable, from, map, switchMap, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth) {}
+  constructor(private afAuth: AngularFireAuth, private readonly store: Store) {}
 
   public isAuthenticated(): Observable<boolean> {
     return from(this.afAuth.currentUser).pipe(map((user) => !!user));
@@ -29,7 +34,7 @@ export class AuthService {
       }),
       switchMap((user: UserData) =>
         from(user.updateProfile({ displayName: userName })).pipe(
-          map(() => user)
+          map(() => structuredClone(user))
         )
       )
     );
@@ -44,12 +49,44 @@ export class AuthService {
         if (!user) {
           throw new Error('User not found');
         }
-        return user;
-      })
+        return structuredClone(user);
+      }),
+      tap(() => this.setDevAutoLogin(email, password))
     );
   }
 
   public logout(): Observable<void> {
-    return from(this.afAuth.signOut());
+    return from(
+      this.afAuth
+        .signOut()
+        .then(() => {
+          this.removeUserDataFromLocalStorage();
+        })
+        .catch((err) => console.log(err))
+    );
+  }
+
+  private setDevAutoLogin(email: string, password: string): void {
+    if (isDevMode()) {
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', password);
+    } else {
+      this.removeUserDataFromLocalStorage();
+    }
+  }
+
+  public devAutoLogin(): void {
+    const email = localStorage.getItem('email');
+    const password = localStorage.getItem('password');
+    if (isDevMode() && email && password) {
+      this.store.dispatch(startLoginUserAction({ email, password }));
+    } else {
+      this.store.dispatch(userLoginFailAction());
+    }
+  }
+
+  private removeUserDataFromLocalStorage(): void {
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
   }
 }

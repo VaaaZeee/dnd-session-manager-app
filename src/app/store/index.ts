@@ -1,4 +1,5 @@
 import { ActionReducerMap } from '@ngrx/store';
+import { InitializerEffects } from './effects/initializer.effects';
 import { RedirectEffects } from './effects/redirect.effects';
 import { LoginEffects } from './effects/user/login.effects';
 import { RegisterEffects } from './effects/user/register.effects';
@@ -11,4 +12,9 @@ export interface AppState {
 
 export const reducers: ActionReducerMap<AppState> = { user: userReducer };
 
-export const appEffects = [RedirectEffects, RegisterEffects, LoginEffects];
+export const appEffects = [
+  InitializerEffects,
+  RedirectEffects,
+  RegisterEffects,
+  LoginEffects,
+];

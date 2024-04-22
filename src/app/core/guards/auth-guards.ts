@@ -34,7 +34,7 @@ export const loggedOutGuard: CanActivateFn = (
     .pipe(
       tap(
         (isAuthenticated) =>
-          isAuthenticated && router.navigateByUrl(`/${PAGES.HOME}`)
+          isAuthenticated && router.navigateByUrl(`/${PAGES.MAIN}`)
       ),
       map((isAuthenticated) => !isAuthenticated)
     );

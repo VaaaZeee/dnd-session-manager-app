@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from '@core/services/auth/auth.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
+  logoutUserAction,
   startLoginUserAction,
   userLoginFailAction,
   userLoginSuccessAction,
@@ -25,4 +26,14 @@ export class LoginEffects {
       catchError(() => of(userLoginFailAction()))
     );
   });
+
+  logoutUser$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(logoutUserAction),
+        switchMap(() => this.authService.logout())
+      );
+    },
+    { dispatch: false }
+  );
 }

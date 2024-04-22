@@ -32,9 +32,14 @@
               }
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/theme"]
+              "includePaths": [
+                "src/theme"
+              ]
             },
-            "styles": ["src/theme/ionic-variables.scss", "src/global.scss"],
+            "styles": [
+              "src/theme/ionic-variables.scss",
+              "src/global.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -114,7 +119,10 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/theme/ionic-variables.scss", "src/global.scss"],
+            "styles": [
+              "src/theme/ionic-variables.scss",
+              "src/global.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -127,7 +135,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         },
         "deploy": {
@@ -151,7 +162,9 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@ionic/angular-toolkit"],
+    "schematicCollections": [
+      "@ionic/angular-toolkit"
+    ],
     "analytics": false
   },
   "schematics": {
