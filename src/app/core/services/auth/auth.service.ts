@@ -1,18 +1,25 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 import { UserData } from '@models/userData';
 import { Store } from '@ngrx/store';
 import {
-  startLoginUserAction,
-  userLoginFailAction,
+  startUserAutoLoginAction,
+  userAutoLoginFailAction,
+  userAutoLoginSuccessAction,
 } from '@store/actions/user.actions';
-import { Observable, from, map, switchMap, tap } from 'rxjs';
+import { Observable, delay, from, map, of, switchMap, tap } from 'rxjs';
+import { PAGES } from 'src/app/app-route-enums';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth, private readonly store: Store) {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private readonly store: Store,
+    private readonly router: Router
+  ) {}
 
   public isAuthenticated(): Observable<boolean> {
     return from(this.afAuth.currentUser).pipe(map((user) => !!user));
@@ -34,7 +41,7 @@ export class AuthService {
       }),
       switchMap((user: UserData) =>
         from(user.updateProfile({ displayName: userName })).pipe(
-          map(() => structuredClone(user))
+          map(() => JSON.parse(JSON.stringify(user)))
         )
       )
     );
@@ -49,7 +56,7 @@ export class AuthService {
         if (!user) {
           throw new Error('User not found');
         }
-        return structuredClone(user);
+        return JSON.parse(JSON.stringify(user));
       }),
       tap(() => this.setDevAutoLogin(email, password))
     );
@@ -61,6 +68,7 @@ export class AuthService {
         .signOut()
         .then(() => {
           this.removeUserDataFromLocalStorage();
+          this.router.navigateByUrl(`/${PAGES.LOGIN}`);
         })
         .catch((err) => console.log(err))
     );
@@ -79,10 +87,29 @@ export class AuthService {
     const email = localStorage.getItem('email');
     const password = localStorage.getItem('password');
     if (isDevMode() && email && password) {
-      this.store.dispatch(startLoginUserAction({ email, password }));
+      this.store.dispatch(startUserAutoLoginAction({ email, password }));
     } else {
-      this.store.dispatch(userLoginFailAction());
+      this.store.dispatch(userAutoLoginFailAction());
     }
+  }
+
+  public autoLogin(): Observable<any> {
+    if (isDevMode()) {
+      return of(this.devAutoLogin()).pipe(delay(500));
+    }
+    return from(this.afAuth.currentUser).pipe(
+      tap((currentUser) => {
+        if (currentUser) {
+          this.store.dispatch(
+            userAutoLoginSuccessAction({
+              user: JSON.parse(JSON.stringify(currentUser)),
+            })
+          );
+        } else {
+          this.store.dispatch(userAutoLoginFailAction());
+        }
+      })
+    );
   }
 
   private removeUserDataFromLocalStorage(): void {

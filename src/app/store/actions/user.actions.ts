@@ -29,4 +29,17 @@ export const userLoginFailAction = createAction(
   '[Login] User login fail action'
 );
 
+export const startUserAutoLoginAction = createAction(
+  '[Auto login] Start user auto login action',
+  props<{ email: string; password: string }>()
+);
+
+export const userAutoLoginSuccessAction = createAction(
+  '[Auto login] User auto login success action',
+  props<{ user: UserData }>()
+);
+
+export const userAutoLoginFailAction = createAction(
+  '[Auto login] User auto login fail action'
+);
 export const logoutUserAction = createAction('[Nav bar] Log out user');

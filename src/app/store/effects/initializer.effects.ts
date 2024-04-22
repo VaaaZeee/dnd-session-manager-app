@@ -5,10 +5,10 @@ import {
   startAppInitializerAction,
 } from '@store/actions/initializer.actions';
 import {
-  userLoginFailAction,
-  userLoginSuccessAction,
+  userAutoLoginFailAction,
+  userAutoLoginSuccessAction,
 } from '@store/actions/user.actions';
-import { map, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Injectable()
@@ -22,6 +22,7 @@ export class InitializerEffects {
     () => {
       return this.actions$.pipe(
         ofType(startAppInitializerAction),
+        switchMap(() => this.authService.autoLogin()),
         tap(() => this.authService.devAutoLogin())
       );
     },
@@ -30,7 +31,7 @@ export class InitializerEffects {
 
   releaseAppInitializer$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(userLoginSuccessAction, userLoginFailAction),
+      ofType(userAutoLoginFailAction, userAutoLoginSuccessAction),
       map(() => releaseAppInitializerAction())
     );
   });

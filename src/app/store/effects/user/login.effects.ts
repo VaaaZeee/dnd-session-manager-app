@@ -4,6 +4,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   logoutUserAction,
   startLoginUserAction,
+  startUserAutoLoginAction,
+  userAutoLoginFailAction,
+  userAutoLoginSuccessAction,
   userLoginFailAction,
   userLoginSuccessAction,
 } from '@store/actions/user.actions';
@@ -23,7 +26,21 @@ export class LoginEffects {
         this.authService.loginWithEmailAndPassword(email, password)
       ),
       map((user) => userLoginSuccessAction({ user })),
-      catchError(() => of(userLoginFailAction()))
+      catchError((error) => {
+        console.log(error);
+        return of(userLoginFailAction());
+      })
+    );
+  });
+
+  autoLoginUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(startUserAutoLoginAction),
+      switchMap(({ email, password }) =>
+        this.authService.loginWithEmailAndPassword(email, password)
+      ),
+      map((user) => userAutoLoginSuccessAction({ user })),
+      catchError(() => of(userAutoLoginFailAction()))
     );
   });
 
