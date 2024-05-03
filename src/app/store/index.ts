@@ -1,4 +1,5 @@
 import { ActionReducerMap } from '@ngrx/store';
+import { GameState } from '../pages/main-page/components/game/store';
 import { InitializerEffects } from './effects/initializer.effects';
 import { RedirectEffects } from './effects/redirect.effects';
 import { LoginEffects } from './effects/user/login.effects';
@@ -8,6 +9,7 @@ import { UserState } from './states/user-state';
 
 export interface AppState {
   user: UserState;
+  game?: GameState;
 }
 
 export const reducers: ActionReducerMap<AppState> = { user: userReducer };

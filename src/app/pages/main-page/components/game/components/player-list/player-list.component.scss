@@ -8,9 +8,8 @@
   margin: 1rem;
   padding: 1rem;
   gap: 0.5rem;
-  border-radius: 8px;
-
-  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: $borderRadius;
+  background-color: $transparentBackground;
 
   .list-title {
     @include prevent-select;
@@ -20,12 +19,8 @@
     margin-bottom: 0.5rem;
 
     .group-message {
+      @include icon-button;
       margin-left: 0.5rem;
-      cursor: pointer;
-
-      &:hover {
-        color: $primaryColor;
-      }
     }
   }
 }

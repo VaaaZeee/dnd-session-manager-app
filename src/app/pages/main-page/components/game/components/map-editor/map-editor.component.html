@@ -1,1 +1,7 @@
-<div class="container" #container><div id="playground"></div></div>
+<div
+  class="container"
+  #container
+  [ngClass]="{ grab: isGrabSelected$ | async, move: isMoveSelected$ | async }"
+>
+  <div id="playground"></div>
+</div>

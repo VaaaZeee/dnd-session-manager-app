@@ -1,0 +1,6 @@
+<ng-container *ngIf="toolbarActions$ | async as toolbarActions">
+  <dnd-toolbar
+    *ngIf="toolbarActions.length"
+    [actions]="toolbarActions"
+  ></dnd-toolbar>
+</ng-container>

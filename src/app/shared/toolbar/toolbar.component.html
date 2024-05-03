@@ -1,0 +1,8 @@
+<ng-container *ngIf="actions">
+  <div class="toolbar-container" [style.flex-direction]="orientation">
+    <dnd-toolbar-item
+      *ngFor="let action of actions"
+      [toolbarAction]="action"
+    ></dnd-toolbar-item>
+  </div>
+</ng-container>

@@ -1,0 +1,7 @@
+<ng-container *ngIf="toolbarActions$ | async as toolbarActions">
+  <dnd-toolbar
+    *ngIf="toolbarActions.length"
+    [actions]="toolbarActions"
+    [orientation]="'column'"
+  ></dnd-toolbar>
+</ng-container>
