@@ -5,7 +5,7 @@ import {
   userRegistrationFailAction,
   userRegistrationSuccessAction,
 } from '@store/actions/user.actions';
-import { isStrictDefined } from '@utils/is-strict-defined';
+import { isStrictDefined } from '@utils/is-strict-defined.utils';
 import { catchError, filter, map, of, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { startRegisterUserAction } from '@store/actions/user.actions';
-import { CustomValidators } from '@utils/custom-validators';
+import { CustomValidators } from '@utils/custom-validators.utils';
 import { Subject, scan } from 'rxjs';
 
 @Component({

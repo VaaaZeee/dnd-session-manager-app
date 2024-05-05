@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Nullable } from '@models/nullable';
 import { Store } from '@ngrx/store';
+import { CoordinateGeometryUtils } from '@utils/coordinate-geometry.utils';
 import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
@@ -57,8 +58,8 @@ export class MapEditorComponent implements AfterViewInit {
         this.map = this.scaleImage(img);
         layer.add(this.map);
         this.map.moveToBottom();
-        this.addFogOfWar(layer, this.map);
-        this.cutTheFog(layer, this.map);
+        this.addFogOfWar(this.map);
+        this.cutTheFog(this.map);
       });
     }
   }
@@ -118,18 +119,29 @@ export class MapEditorComponent implements AfterViewInit {
     }
   }
 
-  private cutTheFog(layer: Layer, map: Konva.Image) {
+  private cutTheFog(map: Konva.Image) {
     const poly = new Konva.Line({
-      points: [300, 200, 300, 600, 600, 600, 600, 200],
+      points: CoordinateGeometryUtils.convertToSortedPointsArray([
+        300, 600, 300, 200, 600, 200, 600, 600,
+      ]),
+      stroke: 'white',
+      draggable: true,
+      closed: true,
+    });
+    const poly2 = new Konva.Line({
+      points: CoordinateGeometryUtils.convertToSortedPointsArray([
+        500, 600, 500, 200, 700, 200, 700, 600,
+      ]),
       stroke: 'white',
       draggable: true,
       closed: true,
     });
     this.cutGroup.add(poly);
-    this.fogGroup.clipFunc(this.setClipFunc1(map, poly));
+    this.cutGroup.add(poly2);
+    this.fogGroup.clipFunc(this.cutFogClipFunction(map));
   }
 
-  private addFogOfWar(layer: Layer, map: Konva.Image): void {
+  private addFogOfWar(map: Konva.Image): void {
     const attrs = map.getAttrs();
     let fogOfWar = new Konva.Rect({
       x: attrs.x,
@@ -144,28 +156,27 @@ export class MapEditorComponent implements AfterViewInit {
     this.fogGroup.add(fogOfWar);
   }
 
-  private setClipFunc1(map: Konva.Image, poly: Konva.Line) {
-    console.log('asd');
+  private cutFogClipFunction(map: Konva.Image) {
     const polygons = this.cutGroup.getChildren();
     return function (ctx: any) {
       const attrs = map.getAttrs();
       ctx.beginPath();
-      // Draw the first hull: clockwise
       ctx.moveTo(attrs.x, attrs.y);
       ctx.lineTo(attrs.width! * 2, attrs.y);
       ctx.lineTo(attrs.width! * 2, attrs.height);
       ctx.lineTo(attrs.y, attrs.height);
-      // Closing path, but not starting a new one
-      ctx.closePath();
-      /* ctx.add(poly); */
-      const cutAttrs = polygons[0].getAttrs();
-      const x = cutAttrs.x ?? 0;
-      const y = cutAttrs.y ?? 0;
-      ctx.moveTo(300 + x, 200 + y); // start point
-      ctx.lineTo(300 + x, 600 + y); // next x and y coord
-      ctx.lineTo(600 + x, 600 + y); // next x and y coord
-      ctx.lineTo(600 + x, 200 + y); // next x and y coord
-      ctx.closePath();
+
+      polygons.forEach((polygon) => {
+        const cutAttrs = polygon.getAttrs();
+        const x = cutAttrs.x ?? 0;
+        const y = cutAttrs.y ?? 0;
+        const points = cutAttrs['points'];
+
+        ctx.moveTo(points[0] + x, points[1] + y);
+        for (let i = 2; i <= points.length; i += 2) {
+          ctx.lineTo(points[i - 2] + x, points[i - 1] + y);
+        }
+      });
     };
   }
 }
