@@ -10,7 +10,11 @@ import { selectIsMoveSelected } from '../../store/selectors/top-toolbar.selector
 
 const SCALE_BY = 1.1;
 const TEST_IMG_SRC = 'assets/images/test-map.jpg';
-
+interface MapConfig {
+  scaleRatio: number;
+  centerShiftX: number;
+  centerShiftY: number;
+}
 @Component({
   selector: 'dnd-map-editor',
   templateUrl: './map-editor.component.html',
@@ -22,8 +26,12 @@ export class MapEditorComponent implements AfterViewInit {
   private stage: Nullable<Stage>;
   private layer = new Layer();
   private map: Nullable<Konva.Image>;
+  private mapConfig: Nullable<MapConfig>;
   private fogGroup = new Konva.Group({});
   private cutGroup = new Konva.Group({});
+  private newPolygonGroup = new Konva.Group({});
+
+  private newPolygon: Nullable<Konva.Line>;
 
   protected isGrabSelected$ = this.store.select(selectIsGrabSelected);
   protected isMoveSelected$ = this.store.select(selectIsMoveSelected);
@@ -31,7 +39,7 @@ export class MapEditorComponent implements AfterViewInit {
   constructor(private readonly store: Store) {}
 
   public ngAfterViewInit(): void {
-    this.layer.add(this.fogGroup, this.cutGroup);
+    this.layer.add(this.fogGroup, this.cutGroup, this.newPolygonGroup);
     this.stage = this.createStage(this.layer);
 
     this.loadImageOnLayer(this.layer);
@@ -59,7 +67,7 @@ export class MapEditorComponent implements AfterViewInit {
         layer.add(this.map);
         this.map.moveToBottom();
         this.addFogOfWar(this.map);
-        this.cutTheFog(this.map);
+        //this.cutTheFog();
       });
     }
   }
@@ -69,12 +77,15 @@ export class MapEditorComponent implements AfterViewInit {
     const hRatio = container.offsetWidth / img.width;
     const vRatio = container.offsetHeight / img.height;
     const ratio = Math.min(hRatio, vRatio);
-    const centerShift_x = (container.offsetWidth - img.width * ratio) / 2;
-    const centerShift_y = (container.offsetHeight - img.height * ratio) / 2;
+    this.mapConfig = {
+      scaleRatio: Math.min(hRatio, vRatio),
+      centerShiftX: (container.offsetWidth - img.width * ratio) / 2,
+      centerShiftY: (container.offsetHeight - img.height * ratio) / 2,
+    };
 
     return new Konva.Image({
-      x: centerShift_x,
-      y: centerShift_y,
+      x: this.mapConfig.centerShiftX,
+      y: this.mapConfig.centerShiftY,
       image: img,
       width: img.width * ratio,
       height: img.height * ratio,
@@ -119,28 +130,6 @@ export class MapEditorComponent implements AfterViewInit {
     }
   }
 
-  private cutTheFog(map: Konva.Image) {
-    const poly = new Konva.Line({
-      points: CoordinateGeometryUtils.convertToSortedPointsArray([
-        300, 600, 300, 200, 600, 200, 600, 600,
-      ]),
-      stroke: 'white',
-      draggable: true,
-      closed: true,
-    });
-    const poly2 = new Konva.Line({
-      points: CoordinateGeometryUtils.convertToSortedPointsArray([
-        500, 600, 500, 200, 700, 200, 700, 600,
-      ]),
-      stroke: 'white',
-      draggable: true,
-      closed: true,
-    });
-    this.cutGroup.add(poly);
-    this.cutGroup.add(poly2);
-    this.fogGroup.clipFunc(this.cutFogClipFunction(map));
-  }
-
   private addFogOfWar(map: Konva.Image): void {
     const attrs = map.getAttrs();
     let fogOfWar = new Konva.Rect({
@@ -152,31 +141,92 @@ export class MapEditorComponent implements AfterViewInit {
       opacity: 0.6,
       name: 'fog-of-war',
     });
-
+    fogOfWar.on('pointerdown', ({ evt }) => {
+      if (!this.newPolygon) {
+        this.startPolygonDrawing(evt);
+      } else {
+        const points = this.newPolygon.points();
+        const lastXDif = Math.abs(evt.offsetX - points[0]);
+        const lastYDif = Math.abs(evt.offsetY - points[1]);
+        console.log(lastXDif, lastYDif);
+        if (points.length >= 6 && lastXDif < 5 && lastYDif < 5) {
+          this.createPolygon();
+        } else {
+          this.updatePolygonDrawing(evt);
+        }
+      }
+    });
+    fogOfWar.on('pointermove', (event) => {
+      if (this.newPolygon) {
+        this.updatePolygonPreview(event.evt);
+      }
+    });
     this.fogGroup.add(fogOfWar);
   }
 
-  private cutFogClipFunction(map: Konva.Image) {
-    const polygons = this.cutGroup.getChildren();
-    return function (ctx: any) {
-      const attrs = map.getAttrs();
-      ctx.beginPath();
-      ctx.moveTo(attrs.x, attrs.y);
-      ctx.lineTo(attrs.width! * 2, attrs.y);
-      ctx.lineTo(attrs.width! * 2, attrs.height);
-      ctx.lineTo(attrs.y, attrs.height);
+  private startPolygonDrawing(event: PointerEvent) {
+    console.log(event);
+    this.newPolygon = new Konva.Line({
+      points: [
+        event.offsetX,
+        event.offsetY,
+        event.offsetX + 1,
+        event.offsetY + 1,
+      ],
+      stroke: 'gray',
+      closed: false,
+    });
+    this.newPolygonGroup.add(this.newPolygon);
+  }
 
-      polygons.forEach((polygon) => {
-        const cutAttrs = polygon.getAttrs();
-        const x = cutAttrs.x ?? 0;
-        const y = cutAttrs.y ?? 0;
-        const points = cutAttrs['points'];
+  private updatePolygonDrawing(event: PointerEvent) {
+    console.log(event);
+    if (this.newPolygon) {
+      this.newPolygon.points([
+        ...this.newPolygon.points(),
+        event.offsetX,
+        event.offsetY,
+      ]);
+    }
+  }
 
-        ctx.moveTo(points[0] + x, points[1] + y);
-        for (let i = 2; i <= points.length; i += 2) {
-          ctx.lineTo(points[i - 2] + x, points[i - 1] + y);
-        }
-      });
-    };
+  private updatePolygonPreview(event: PointerEvent) {
+    if (this.newPolygon) {
+      const points = this.newPolygon.points();
+      this.newPolygon.points([
+        ...points.splice(0, points.length - 2),
+        event.offsetX,
+        event.offsetY,
+      ]);
+    }
+  }
+
+  private createPolygon() {
+    console.log('createPolygon');
+    this.cutGroup.getChildren();
+    this.newPolygonGroup.removeChildren();
+    const points = this.newPolygon?.points() ?? [];
+    const newPolygon = new Konva.Line({
+      points: CoordinateGeometryUtils.convertToSortedPointsArray([
+        ...(points.splice(0, points.length - 2) ?? []),
+      ]),
+      fillPatternImage: this.map?.getAttrs().image as HTMLImageElement,
+      fillPatternScaleX: this.mapConfig?.scaleRatio,
+      fillPatternScaleY: this.mapConfig?.scaleRatio,
+      fillPatternX: this.mapConfig?.centerShiftX,
+      fillPatternRepeat: 'no-repeat',
+      stroke: 'gray',
+      draggable: true,
+      closed: true,
+    });
+    newPolygon.on('dragmove', ({ target }) => {
+      const attrs = target.getAttrs();
+      const newX = (this.mapConfig?.centerShiftX ?? 0) - (attrs.x ?? 0);
+      const newY = (this.mapConfig?.centerShiftY ?? 0) - (attrs.y ?? 0);
+      newPolygon.fillPatternX(newX);
+      newPolygon.fillPatternY(newY);
+    });
+    this.newPolygon = undefined;
+    this.cutGroup.add(newPolygon);
   }
 }
