@@ -6,10 +6,11 @@ import { CustomValidators } from '@utils/custom-validators.utils';
 import { Subject, scan } from 'rxjs';
 
 @Component({
-  selector: 'dnd-registration-page',
-  templateUrl: './registration-page.component.html',
-  styleUrls: ['./registration-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'dnd-registration-page',
+    templateUrl: './registration-page.component.html',
+    styleUrls: ['./registration-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class RegistrationPageComponent {
   private toggleShowPassword$ = new Subject<void>();

@@ -11,10 +11,11 @@ import { Nullable } from '@models/nullable';
 import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
 
 @Component({
-  selector: 'dnd-form-input',
-  templateUrl: './form-input.component.html',
-  styleUrls: ['./form-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'dnd-form-input',
+    templateUrl: './form-input.component.html',
+    styleUrls: ['./form-input.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class FormInputComponent implements OnInit, OnDestroy {
   @Input() type: string = 'text';

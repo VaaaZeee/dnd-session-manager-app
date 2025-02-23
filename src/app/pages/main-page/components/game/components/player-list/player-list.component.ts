@@ -9,10 +9,11 @@ const PLAYERS: PlayerData[] = [
 ];
 
 @Component({
-  selector: 'dnd-player-list',
-  templateUrl: './player-list.component.html',
-  styleUrls: ['./player-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'dnd-player-list',
+    templateUrl: './player-list.component.html',
+    styleUrls: ['./player-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class PlayerListComponent {
   protected players = PLAYERS;

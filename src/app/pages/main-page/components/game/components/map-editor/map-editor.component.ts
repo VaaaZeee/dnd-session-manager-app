@@ -16,9 +16,10 @@ interface MapConfig {
   centerShiftY: number;
 }
 @Component({
-  selector: 'dnd-map-editor',
-  templateUrl: './map-editor.component.html',
-  styleUrls: ['./map-editor.component.scss'],
+    selector: 'dnd-map-editor',
+    templateUrl: './map-editor.component.html',
+    styleUrls: ['./map-editor.component.scss'],
+    standalone: false
 })
 export class MapEditorComponent implements AfterViewInit {
   @ViewChild('container') container: Nullable<ElementRef>;

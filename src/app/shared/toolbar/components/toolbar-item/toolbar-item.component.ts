@@ -5,9 +5,10 @@ import { ToolbarAction } from '@shared/toolbar/models/toolbar-action';
 import { RightToolbarTools } from 'src/app/pages/main-page/components/game/components/right-toolbar/right-toolbar-tools.enum';
 
 @Component({
-  selector: 'dnd-toolbar-item',
-  templateUrl: './toolbar-item.component.html',
-  styleUrls: ['./toolbar-item.component.scss'],
+    selector: 'dnd-toolbar-item',
+    templateUrl: './toolbar-item.component.html',
+    styleUrls: ['./toolbar-item.component.scss'],
+    standalone: false
 })
 export class ToolbarItemComponent {
   @Input() public toolbarAction: Nullable<ToolbarAction>;

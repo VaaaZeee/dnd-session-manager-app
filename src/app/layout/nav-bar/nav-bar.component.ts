@@ -4,9 +4,10 @@ import { Store } from '@ngrx/store';
 import { logoutUserAction } from '@store/actions/user.actions';
 
 @Component({
-  selector: 'dnd-nav-bar',
-  templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.scss'],
+    selector: 'dnd-nav-bar',
+    templateUrl: './nav-bar.component.html',
+    styleUrls: ['./nav-bar.component.scss'],
+    standalone: false
 })
 export class NavBarComponent {
   constructor(

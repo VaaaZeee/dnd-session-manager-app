@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule, isDevMode } from '@angular/core';
+import { NgModule, isDevMode, inject, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -31,12 +31,10 @@ import { appEffects, reducers } from './store';
     AngularFireAuthModule,
   ],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializer,
-      deps: [Store, Actions],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+        const initializerFn = (appInitializer)(inject(Store), inject(Actions));
+        return initializerFn();
+      }),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

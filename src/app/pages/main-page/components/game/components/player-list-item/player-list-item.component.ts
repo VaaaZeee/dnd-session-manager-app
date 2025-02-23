@@ -3,9 +3,10 @@ import { Nullable } from '../../../../../../models/nullable';
 import { PlayerData } from '../../models/player-data';
 
 @Component({
-  selector: 'dnd-player-list-item',
-  templateUrl: './player-list-item.component.html',
-  styleUrls: ['./player-list-item.component.scss'],
+    selector: 'dnd-player-list-item',
+    templateUrl: './player-list-item.component.html',
+    styleUrls: ['./player-list-item.component.scss'],
+    standalone: false
 })
 export class PlayerListItemComponent {
   @Input() player: Nullable<PlayerData>;

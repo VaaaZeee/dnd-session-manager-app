@@ -5,9 +5,10 @@ import { Observable } from 'rxjs';
 import { selectRightToolbarTools } from '../../store/selectors/right-toolbar.selector';
 
 @Component({
-  selector: 'dnd-right-toolbar',
-  templateUrl: './right-toolbar.component.html',
-  styleUrls: ['./right-toolbar.component.scss'],
+    selector: 'dnd-right-toolbar',
+    templateUrl: './right-toolbar.component.html',
+    styleUrls: ['./right-toolbar.component.scss'],
+    standalone: false
 })
 export class RightToolbarComponent {
   protected toolbarActions$: Observable<ToolbarAction[]> = this.store.select(

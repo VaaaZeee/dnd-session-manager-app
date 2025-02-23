@@ -5,10 +5,11 @@ import { startLoginUserAction } from '@store/actions/user.actions';
 import { Subject, scan } from 'rxjs';
 
 @Component({
-  selector: 'dnd-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'dnd-login-page',
+    templateUrl: './login-page.component.html',
+    styleUrls: ['./login-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class LoginPageComponent {
   private toggleShowPassword$ = new Subject<void>();
