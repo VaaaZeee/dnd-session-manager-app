@@ -1,5 +1,8 @@
+import { NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IonIcon } from '@ionic/angular/standalone';
 import { PlayerData } from '../../models/player-data';
+import { PlayerListItemComponent } from '../player-list-item/player-list-item.component';
 
 const PLAYERS: PlayerData[] = [
   { id: 'player1Id', name: 'Player 1' },
@@ -9,11 +12,11 @@ const PLAYERS: PlayerData[] = [
 ];
 
 @Component({
-    selector: 'dnd-player-list',
-    templateUrl: './player-list.component.html',
-    styleUrls: ['./player-list.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'dnd-player-list',
+  templateUrl: './player-list.component.html',
+  styleUrls: ['./player-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgFor, IonIcon, PlayerListItemComponent],
 })
 export class PlayerListComponent {
   protected players = PLAYERS;

@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,15 +8,22 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import {
+  IonButton,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonList,
+} from '@ionic/angular/standalone';
 import { Nullable } from '@models/nullable';
 import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
 
 @Component({
-    selector: 'dnd-form-input',
-    templateUrl: './form-input.component.html',
-    styleUrls: ['./form-input.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'dnd-form-input',
+  templateUrl: './form-input.component.html',
+  styleUrls: ['./form-input.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgIf, IonIcon, IonInput, IonItem, IonList, IonButton],
 })
 export class FormInputComponent implements OnInit, OnDestroy {
   @Input() type: string = 'text';

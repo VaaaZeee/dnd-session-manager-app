@@ -7,6 +7,7 @@ import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
 import { selectIsGrabSelected } from '../../store/selectors/right-toolbar.selector';
 import { selectIsMoveSelected } from '../../store/selectors/top-toolbar.selector';
+import { NgClass, AsyncPipe } from '@angular/common';
 
 const SCALE_BY = 1.1;
 const TEST_IMG_SRC = 'assets/images/test-map.jpg';
@@ -19,7 +20,7 @@ interface MapConfig {
     selector: 'dnd-map-editor',
     templateUrl: './map-editor.component.html',
     styleUrls: ['./map-editor.component.scss'],
-    standalone: false
+    imports: [NgClass, AsyncPipe]
 })
 export class MapEditorComponent implements AfterViewInit {
   @ViewChild('container') container: Nullable<ElementRef>;

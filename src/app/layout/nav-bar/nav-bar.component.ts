@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonIcon } from '@ionic/angular/standalone';
 import { Store } from '@ngrx/store';
 import { logoutUserAction } from '@store/actions/user.actions';
 
 @Component({
-    selector: 'dnd-nav-bar',
-    templateUrl: './nav-bar.component.html',
-    styleUrls: ['./nav-bar.component.scss'],
-    standalone: false
+  selector: 'dnd-nav-bar',
+  templateUrl: './nav-bar.component.html',
+  styleUrls: ['./nav-bar.component.scss'],
+  imports: [IonIcon],
 })
 export class NavBarComponent {
   constructor(

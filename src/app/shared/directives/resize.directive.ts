@@ -7,10 +7,7 @@ import {
   Output,
 } from '@angular/core';
 
-@Directive({
-    selector: '[dndResize]',
-    standalone: false
-})
+@Directive({ selector: '[dndResize]' })
 export class ResizeDirective implements AfterViewInit, OnDestroy {
   @Output() public dndResize = new EventEmitter<number>();
 

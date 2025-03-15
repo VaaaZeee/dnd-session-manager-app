@@ -1,15 +1,29 @@
+import { AsyncPipe, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { IonButton } from '@ionic/angular/standalone';
 import { Store } from '@ngrx/store';
 import { startLoginUserAction } from '@store/actions/user.actions';
 import { Subject, scan } from 'rxjs';
+import { FormInputComponent } from '../../shared/form-input/form-input.component';
 
 @Component({
-    selector: 'dnd-login-page',
-    templateUrl: './login-page.component.html',
-    styleUrls: ['./login-page.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'dnd-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    NgIf,
+    IonButton,
+    ReactiveFormsModule,
+    FormInputComponent,
+    AsyncPipe,
+  ],
 })
 export class LoginPageComponent {
   private toggleShowPassword$ = new Subject<void>();
