@@ -1,6 +1,8 @@
 import { NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { chatbubblesOutline } from 'ionicons/icons';
 import { PlayerData } from '../../models/player-data';
 import { PlayerListItemComponent } from '../player-list-item/player-list-item.component';
 
@@ -20,4 +22,8 @@ const PLAYERS: PlayerData[] = [
 })
 export class PlayerListComponent {
   protected players = PLAYERS;
+
+  constructor() {
+    addIcons({ chatbubblesOutline });
+  }
 }

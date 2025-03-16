@@ -6,19 +6,25 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { IonButton } from '@ionic/angular/standalone';
 import { Store } from '@ngrx/store';
 import { startRegisterUserAction } from '@store/actions/user.actions';
 import { CustomValidators } from '@utils/custom-validators.utils';
 import { Subject, scan } from 'rxjs';
 import { FormInputComponent } from '../../shared/form-input/form-input.component';
-import { IonButton } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'dnd-registration-page',
   templateUrl: './registration-page.component.html',
   styleUrls: ['./registration-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgIf, IonButton, ReactiveFormsModule, FormInputComponent, AsyncPipe],
+  imports: [
+    NgIf,
+    IonButton,
+    ReactiveFormsModule,
+    FormInputComponent,
+    AsyncPipe,
+  ],
 })
 export class RegistrationPageComponent {
   private toggleShowPassword$ = new Subject<void>();

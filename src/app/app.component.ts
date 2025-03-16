@@ -8,4 +8,6 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonApp, IonRouterOutlet],
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor() {}
+}

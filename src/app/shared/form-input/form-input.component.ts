@@ -16,7 +16,11 @@ import {
   IonList,
 } from '@ionic/angular/standalone';
 import { Nullable } from '@models/nullable';
+import { addIcons } from 'ionicons';
+import { eye, eyeOff, lockClosed, mail, person } from 'ionicons/icons';
 import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
+
+type IconTypes = 'mail' | 'person' | 'lock-closed' | 'eye' | 'eye-off';
 
 @Component({
   selector: 'dnd-form-input',
@@ -29,13 +33,17 @@ export class FormInputComponent implements OnInit, OnDestroy {
   @Input() type: string = 'text';
   @Input() label: string = '';
   @Input() placeholder: Nullable<string>;
-  @Input() startIcon: Nullable<string>;
+  @Input() startIcon: Nullable<IconTypes>;
   @Input() endIcon: Nullable<string>;
   @Output() endIconClicked = new EventEmitter<void>();
   @Output() valueChange = new EventEmitter<string>();
 
   private destroy$ = new Subject<void>();
   private valueChange$ = new Subject<string>();
+
+  constructor() {
+    addIcons({ mail, person, lockClosed, eye, eyeOff });
+  }
 
   public ngOnInit(): void {
     this.valueChange$
