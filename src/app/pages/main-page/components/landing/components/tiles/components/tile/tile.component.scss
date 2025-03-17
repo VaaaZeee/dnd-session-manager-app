@@ -1,0 +1,35 @@
+@use "variables" as *;
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 12rem;
+  height: 12rem;
+  border-radius: $borderRadius;
+  padding: 1rem;
+  background-color: $primaryColor;
+  transition: 0.3s;
+
+  font-size: 1.5rem;
+
+  ion-icon {
+    font-size: 3rem;
+  }
+
+  &:hover {
+    box-shadow: rgba(255, 255, 255, 0.15) 0px 5px 15px 0px;
+  }
+
+  @media screen and (max-width: $mobileBrakePoint) {
+    width: 10rem;
+    height: 10rem;
+
+    font-size: 1.25rem;
+
+    ion-icon {
+      font-size: 2.5rem;
+    }
+  }
+}
