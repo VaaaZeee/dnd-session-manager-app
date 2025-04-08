@@ -7,7 +7,7 @@ export const environment = {
   firebase: {
     projectId: 'dnd-session-manager',
     appId: '1:1032114902120:web:8d6f54ba4144c3b90fd7dd',
-    storageBucket: 'dnd-session-manager.appspot.com',
+    storageBucket: 'dnd-session-manager.firebasestorage.app',
     apiKey: 'AIzaSyDxGlaLphM731BYuu-gAeWbbSsnpQQhjHo',
     authDomain: 'dnd-session-manager.firebaseapp.com',
     messagingSenderId: '1032114902120',

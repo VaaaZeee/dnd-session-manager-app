@@ -1,14 +1,13 @@
 import {
   enableProdMode,
-  importProvidersFrom,
   inject,
   isDevMode,
   provideAppInitializer,
 } from '@angular/core';
 
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { bootstrapApplication } from '@angular/platform-browser';
 import {
   PreloadAllModules,
@@ -44,11 +43,9 @@ bootstrapApplication(AppComponent, {
     provideStore(reducers),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideEffects(appEffects),
-    importProvidersFrom(
-      AngularFireModule.initializeApp(environment.firebase),
-      AngularFirestoreModule,
-      AngularFireAuthModule
-    ),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
     provideAppInitializer(() => {
       const initializerFn = appInitializer(inject(Store), inject(Actions));
       return initializerFn();

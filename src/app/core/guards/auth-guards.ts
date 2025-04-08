@@ -5,37 +5,29 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable, map, tap } from 'rxjs';
 import { PAGES } from 'src/app/app-route-enums';
 import { AuthService } from '../services/auth/auth.service';
 
 export const authGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
-): Observable<boolean> => {
+): boolean => {
   const router = inject(Router);
-  return inject(AuthService)
-    .isAuthenticated()
-    .pipe(
-      tap(
-        (isAuthenticated) =>
-          !isAuthenticated && router.navigateByUrl(`/${PAGES.LOGIN}`)
-      )
-    );
+  const isAuthenticated = inject(AuthService).isAuthenticated();
+  if (!isAuthenticated) {
+    router.navigateByUrl(`/${PAGES.LOGIN}`);
+  }
+  return isAuthenticated;
 };
 
 export const loggedOutGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
-): Observable<boolean> => {
+): boolean => {
   const router = inject(Router);
-  return inject(AuthService)
-    .isAuthenticated()
-    .pipe(
-      tap(
-        (isAuthenticated) =>
-          isAuthenticated && router.navigateByUrl(`/${PAGES.MAIN}`)
-      ),
-      map((isAuthenticated) => !isAuthenticated)
-    );
+  const isAuthenticated = inject(AuthService).isAuthenticated();
+  if (isAuthenticated) {
+    router.navigateByUrl(`/${PAGES.MAIN}`);
+  }
+  return !isAuthenticated;
 };

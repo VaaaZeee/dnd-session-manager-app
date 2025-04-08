@@ -1,5 +1,5 @@
-import { UserData } from '@models/userData';
+import { User } from '@angular/fire/auth';
 
 export interface UserState {
-  user?: UserData;
+  user?: User;
 }

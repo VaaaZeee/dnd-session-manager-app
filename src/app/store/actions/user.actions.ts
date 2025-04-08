@@ -1,4 +1,4 @@
-import { UserData } from '@models/userData';
+import { User } from '@angular/fire/auth';
 import { createAction, props } from '@ngrx/store';
 
 export const startRegisterUserAction = createAction(
@@ -8,7 +8,7 @@ export const startRegisterUserAction = createAction(
 
 export const userRegistrationSuccessAction = createAction(
   '[Register] User registration success action',
-  props<{ user: UserData }>()
+  props<{ user: User }>()
 );
 
 export const userRegistrationFailAction = createAction(
@@ -22,7 +22,7 @@ export const startLoginUserAction = createAction(
 
 export const userLoginSuccessAction = createAction(
   '[Login] User login success action',
-  props<{ user: UserData }>()
+  props<{ user: User }>()
 );
 
 export const userLoginFailAction = createAction(
@@ -36,7 +36,7 @@ export const startUserAutoLoginAction = createAction(
 
 export const userAutoLoginSuccessAction = createAction(
   '[Auto login] User auto login success action',
-  props<{ user: UserData }>()
+  props<{ user: User }>()
 );
 
 export const userAutoLoginFailAction = createAction(

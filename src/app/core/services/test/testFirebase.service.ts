@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, tap } from 'rxjs';
+import { Firestore } from '@angular/fire/firestore';
+import { collection, getDocs, query } from 'firebase/firestore';
 
 export interface TestData {
   test: string;
@@ -10,12 +10,11 @@ export interface TestData {
   providedIn: 'root',
 })
 export class TestFirebaseService {
-  constructor(private readonly firestore: AngularFirestore) {}
+  constructor(private readonly firestore: Firestore) {}
 
-  public testDB(): Observable<TestData[]> {
-    return this.firestore
-      .collection<TestData>('test')
-      .valueChanges()
-      .pipe(tap(console.log));
+  public async testDB(): Promise<TestData[]> {
+    return (await getDocs(query(collection(this.firestore, 'test')))).docs.map(
+      (test) => test.data() as TestData
+    );
   }
 }

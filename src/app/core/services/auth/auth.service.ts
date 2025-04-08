@@ -1,14 +1,19 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  User,
+} from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { UserData } from '@models/userData';
 import { Store } from '@ngrx/store';
 import {
   startUserAutoLoginAction,
   userAutoLoginFailAction,
   userAutoLoginSuccessAction,
 } from '@store/actions/user.actions';
-import { Observable, delay, from, map, of, switchMap, tap } from 'rxjs';
+import { delay, Observable, of, tap } from 'rxjs';
 import { PAGES } from 'src/app/app-route-enums';
 
 @Injectable({
@@ -16,62 +21,62 @@ import { PAGES } from 'src/app/app-route-enums';
 })
 export class AuthService {
   constructor(
-    private afAuth: AngularFireAuth,
+    private auth: Auth,
     private readonly store: Store,
     private readonly router: Router
   ) {}
 
-  public isAuthenticated(): Observable<boolean> {
-    return from(this.afAuth.currentUser).pipe(map((user) => !!user));
+  public isAuthenticated(): boolean {
+    return !!this.auth.currentUser;
   }
 
-  public registerUser(
+  public async registerUser(
     email: string,
     password: string,
     userName: string
-  ): Observable<UserData> {
-    return from(
-      this.afAuth.createUserWithEmailAndPassword(email, password)
-    ).pipe(
-      map(({ user }) => {
-        if (!user) {
-          throw new Error('The account could not be created');
-        }
-        return user;
-      }),
-      switchMap((user: UserData) =>
-        from(user.updateProfile({ displayName: userName })).pipe(
-          map(() => JSON.parse(JSON.stringify(user)))
-        )
-      )
-    );
+  ): Promise<User> {
+    const user = await createUserWithEmailAndPassword(
+      this.auth,
+      email,
+      password
+    ).then(({ user }) => {
+      if (!user) {
+        throw new Error('The account could not be created');
+      }
+      return user;
+    });
+    await updateProfile(user, { displayName: userName });
+
+    return JSON.parse(JSON.stringify(user));
   }
 
-  public loginWithEmailAndPassword(
+  public async loginWithEmailAndPassword(
     email: string,
     password: string
-  ): Observable<UserData> {
-    return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
-      map(({ user }) => {
-        if (!user) {
-          throw new Error('User not found');
-        }
-        return JSON.parse(JSON.stringify(user));
-      }),
-      tap(() => this.setDevAutoLogin(email, password))
-    );
+  ): Promise<User> {
+    const user = await signInWithEmailAndPassword(
+      this.auth,
+      email,
+      password
+    ).then(({ user }) => {
+      if (!user) {
+        throw new Error('User not found');
+      }
+      this.setDevAutoLogin(email, password);
+      return user;
+    });
+
+    return JSON.parse(JSON.stringify(user));
   }
 
-  public logout(): Observable<void> {
-    return from(
-      this.afAuth
-        .signOut()
-        .then(() => {
-          this.removeUserDataFromLocalStorage();
-          this.router.navigateByUrl(`/${PAGES.LOGIN}`);
-        })
-        .catch((err) => console.log(err))
-    );
+  public logout(): Promise<void> {
+    return this.auth
+      .signOut()
+      .then(() => {
+        this.removeUserDataFromLocalStorage();
+        this.router.navigateByUrl(`/${PAGES.LOGIN}`);
+      })
+      .catch((err) => console.log(err));
   }
 
   private setDevAutoLogin(email: string, password: string): void {
@@ -97,7 +102,8 @@ export class AuthService {
     if (isDevMode()) {
       return of(this.devAutoLogin()).pipe(delay(500));
     }
-    return from(this.afAuth.currentUser).pipe(
+
+    return of(this.auth.currentUser).pipe(
       tap((currentUser) => {
         if (currentUser) {
           this.store.dispatch(
