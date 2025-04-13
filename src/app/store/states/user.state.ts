@@ -1,4 +1,4 @@
-import { User } from '@angular/fire/auth';
+import { User } from '@models/user';
 
 export interface UserState {
   user?: User;

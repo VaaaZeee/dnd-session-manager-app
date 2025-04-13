@@ -1,4 +1,4 @@
-import { User } from '@angular/fire/auth';
+import { User } from '@models/user';
 import { createAction, props } from '@ngrx/store';
 
 export const startRegisterUserAction = createAction(

@@ -4,9 +4,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
-  User,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { User } from '@models/user';
 import { Store } from '@ngrx/store';
 import {
   startUserAutoLoginAction,
@@ -15,6 +15,7 @@ import {
 } from '@store/actions/user.actions';
 import { delay, Observable, of, tap } from 'rxjs';
 import { PAGES } from 'src/app/app-route-enums';
+import { UserUtil } from './../../../utils/user.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +48,7 @@ export class AuthService {
     });
     await updateProfile(user, { displayName: userName });
 
-    return JSON.parse(JSON.stringify(user));
+    return UserUtil.mapFirebaseUser(user);
   }
 
   public async loginWithEmailAndPassword(
@@ -66,7 +67,7 @@ export class AuthService {
       return user;
     });
 
-    return JSON.parse(JSON.stringify(user));
+    return UserUtil.mapFirebaseUser(user);
   }
 
   public logout(): Promise<void> {
@@ -108,7 +109,7 @@ export class AuthService {
         if (currentUser) {
           this.store.dispatch(
             userAutoLoginSuccessAction({
-              user: JSON.parse(JSON.stringify(currentUser)),
+              user: UserUtil.mapFirebaseUser(currentUser),
             })
           );
         } else {
