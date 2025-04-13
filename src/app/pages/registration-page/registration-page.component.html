@@ -1,55 +1,56 @@
-<form
-  class="container"
-  *ngIf="{ showPassword: !!(showPassword$ | async) } as data"
-  [formGroup]="registerForm"
-  (ngSubmit)="submitRegistrationForm()"
->
-  <div class="registration-form-container">
-    <div class="title-container">
-      <span class="title">Registration</span>
-    </div>
-    <div class="input-container">
-      <dnd-form-input
-        [startIcon]="'mail'"
-        [label]="'E-mail'"
-        [type]="'email'"
-        [placeholder]="'your.email@gmail.com'"
-        (valueChange)="updateForm('email', $event)"
-      ></dnd-form-input>
-      <dnd-form-input
-        [startIcon]="'person'"
-        [label]="'User name'"
-        [type]="'text'"
-        [placeholder]="'UserName'"
-        (valueChange)="updateForm('userName', $event)"
-      ></dnd-form-input>
-      <dnd-form-input
-        [startIcon]="'lock-closed'"
-        [label]="'Password'"
-        [placeholder]="'password'"
-        [type]="data.showPassword ? 'text' : 'password'"
-        [endIcon]="data.showPassword ? 'eye-off' : 'eye'"
-        (valueChange)="updateForm('password', $event)"
-        (endIconClicked)="toggleShowPassword()"
-      ></dnd-form-input>
-      <dnd-form-input
-        [startIcon]="'lock-closed'"
-        [label]="'Confirm password'"
-        [placeholder]="'password'"
-        [type]="data.showPassword ? 'text' : 'password'"
-        [endIcon]="data.showPassword ? 'eye-off' : 'eye'"
-        (valueChange)="updateForm('confirmPassword', $event)"
-        (endIconClicked)="toggleShowPassword()"
-      ></dnd-form-input>
-    </div>
-    <ion-button
-      [disabled]="!registerForm.valid"
-      type="submit"
-      class="registration-button"
-      size="small"
-      shape="round"
-      color="primary"
-      ><span class="registration-button-text">Register</span></ion-button
+@if ({ showPassword: !!(showPassword$ | async) }; as data) {
+  <form
+    class="container"
+    [formGroup]="registerForm"
+    (ngSubmit)="submitRegistrationForm()"
     >
-  </div>
-</form>
+    <div class="registration-form-container">
+      <div class="title-container">
+        <span class="title">Registration</span>
+      </div>
+      <div class="input-container">
+        <dnd-form-input
+          [startIcon]="'mail'"
+          [label]="'E-mail'"
+          [type]="'email'"
+          [placeholder]="'your.email@gmail.com'"
+          (valueChange)="updateForm('email', $event)"
+        ></dnd-form-input>
+        <dnd-form-input
+          [startIcon]="'person'"
+          [label]="'User name'"
+          [type]="'text'"
+          [placeholder]="'UserName'"
+          (valueChange)="updateForm('userName', $event)"
+        ></dnd-form-input>
+        <dnd-form-input
+          [startIcon]="'lock-closed'"
+          [label]="'Password'"
+          [placeholder]="'password'"
+          [type]="data.showPassword ? 'text' : 'password'"
+          [endIcon]="data.showPassword ? 'eye-off' : 'eye'"
+          (valueChange)="updateForm('password', $event)"
+          (endIconClicked)="toggleShowPassword()"
+        ></dnd-form-input>
+        <dnd-form-input
+          [startIcon]="'lock-closed'"
+          [label]="'Confirm password'"
+          [placeholder]="'password'"
+          [type]="data.showPassword ? 'text' : 'password'"
+          [endIcon]="data.showPassword ? 'eye-off' : 'eye'"
+          (valueChange)="updateForm('confirmPassword', $event)"
+          (endIconClicked)="toggleShowPassword()"
+        ></dnd-form-input>
+      </div>
+      <ion-button
+        [disabled]="!registerForm.valid"
+        type="submit"
+        class="registration-button"
+        size="small"
+        shape="round"
+        color="primary"
+        ><span class="registration-button-text">Register</span></ion-button
+        >
+      </div>
+    </form>
+  }

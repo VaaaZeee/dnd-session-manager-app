@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -27,7 +27,7 @@ type IconTypes = 'mail' | 'person' | 'lock-closed' | 'eye' | 'eye-off';
   templateUrl: './form-input.component.html',
   styleUrls: ['./form-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgIf, IonIcon, IonInput, IonItem, IonList, IonButton],
+  imports: [IonIcon, IonInput, IonItem, IonList, IonButton],
 })
 export class FormInputComponent implements OnInit, OnDestroy {
   @Input() type: string = 'text';

@@ -1,9 +1,9 @@
-<ng-container *ngIf="player">
+@if (player) {
   <div class="player-container">
     <div>{{ player.name }}</div>
     <div class="player-actions">
       <ion-icon name="chatbox-ellipses-outline"></ion-icon
-      ><ion-icon name="trash-outline"></ion-icon>
+        ><ion-icon name="trash-outline"></ion-icon>
+      </div>
     </div>
-  </div>
-</ng-container>
+  }

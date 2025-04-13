@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -18,7 +18,7 @@ const PLAYERS: PlayerData[] = [
   templateUrl: './player-list.component.html',
   styleUrls: ['./player-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgFor, IonIcon, PlayerListItemComponent],
+  imports: [IonIcon, PlayerListItemComponent],
 })
 export class PlayerListComponent {
   protected players = PLAYERS;

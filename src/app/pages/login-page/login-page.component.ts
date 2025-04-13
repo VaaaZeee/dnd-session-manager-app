@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   FormBuilder,
@@ -18,12 +18,11 @@ import { FormInputComponent } from '../../shared/form-input/form-input.component
   styleUrls: ['./login-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    NgIf,
     IonButton,
     ReactiveFormsModule,
     FormInputComponent,
-    AsyncPipe,
-  ],
+    AsyncPipe
+],
 })
 export class LoginPageComponent {
   private toggleShowPassword$ = new Subject<void>();

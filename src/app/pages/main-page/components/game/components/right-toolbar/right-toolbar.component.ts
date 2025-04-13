@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ToolbarAction } from '@shared/toolbar/models/toolbar-action';
@@ -12,7 +12,7 @@ import { selectRightToolbarTools } from '../../store/selectors/right-toolbar.sel
   selector: 'dnd-right-toolbar',
   templateUrl: './right-toolbar.component.html',
   styleUrls: ['./right-toolbar.component.scss'],
-  imports: [NgIf, ToolbarComponent, AsyncPipe],
+  imports: [ToolbarComponent, AsyncPipe],
 })
 export class RightToolbarComponent {
   protected toolbarActions$: Observable<ToolbarAction[]> = this.store.select(

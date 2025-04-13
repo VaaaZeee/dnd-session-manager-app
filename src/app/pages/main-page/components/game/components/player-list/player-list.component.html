@@ -5,8 +5,9 @@
       <ion-icon name="chatbubbles-outline"></ion-icon>
     </span>
   </div>
-  <dnd-player-list-item
-    *ngFor="let player of players"
-    [player]="player"
-  ></dnd-player-list-item>
+  @for (player of players; track player) {
+    <dnd-player-list-item
+      [player]="player"
+    ></dnd-player-list-item>
+  }
 </div>

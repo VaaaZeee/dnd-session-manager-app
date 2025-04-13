@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ToolbarAction } from '@shared/toolbar/models/toolbar-action';
@@ -12,7 +12,7 @@ import { selectTopToolbarTools } from '../../store/selectors/top-toolbar.selecto
   selector: 'dnd-top-toolbar',
   templateUrl: './top-toolbar.component.html',
   styleUrls: ['./top-toolbar.component.scss'],
-  imports: [NgIf, ToolbarComponent, AsyncPipe],
+  imports: [ToolbarComponent, AsyncPipe],
 })
 export class ToolbarTopComponent {
   protected toolbarActions$: Observable<ToolbarAction[]> = this.store.select(

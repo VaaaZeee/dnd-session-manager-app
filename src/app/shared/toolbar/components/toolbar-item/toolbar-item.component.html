@@ -1,9 +1,9 @@
-<ng-container *ngIf="toolbarAction">
+@if (toolbarAction) {
   <div
     class="toolbar-action"
     [ngClass]="{ selected: toolbarAction.isSelected }"
     (click)="dispatchToolbarAction()"
-  >
+    >
     <ion-icon [name]="toolbarAction.icon"></ion-icon>
   </div>
-</ng-container>
+}

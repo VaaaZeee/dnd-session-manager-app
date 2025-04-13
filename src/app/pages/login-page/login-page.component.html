@@ -1,39 +1,40 @@
-<form
-  class="container"
-  *ngIf="{ showPassword: !!(showPassword$ | async) } as data"
-  [formGroup]="loginForm"
-  (ngSubmit)="submitLoginForm()"
->
-  <div class="login-form-container">
-    <div class="title-container">
-      <span class="title">Login</span>
-    </div>
-    <div class="input-container">
-      <dnd-form-input
-        [startIcon]="'mail'"
-        [label]="'E-mail'"
-        [type]="'email'"
-        [placeholder]="'your.email@gmail.com'"
-        (valueChange)="updateForm('email', $event)"
-      ></dnd-form-input>
-      <dnd-form-input
-        [startIcon]="'lock-closed'"
-        [label]="'Password'"
-        [placeholder]="'password'"
-        [type]="data.showPassword ? 'text' : 'password'"
-        [endIcon]="data.showPassword ? 'eye-off' : 'eye'"
-        (valueChange)="updateForm('password', $event)"
-        (endIconClicked)="toggleShowPassword()"
-      ></dnd-form-input>
-    </div>
-    <ion-button
-      class="login-button"
-      type="submit"
-      [disabled]="!loginForm.valid"
-      size="small"
-      shape="round"
-      color="primary"
-      ><span class="login-button-text">Login</span></ion-button
+@if ({ showPassword: !!(showPassword$ | async) }; as data) {
+  <form
+    class="container"
+    [formGroup]="loginForm"
+    (ngSubmit)="submitLoginForm()"
     >
-  </div>
-</form>
+    <div class="login-form-container">
+      <div class="title-container">
+        <span class="title">Login</span>
+      </div>
+      <div class="input-container">
+        <dnd-form-input
+          [startIcon]="'mail'"
+          [label]="'E-mail'"
+          [type]="'email'"
+          [placeholder]="'your.email@gmail.com'"
+          (valueChange)="updateForm('email', $event)"
+        ></dnd-form-input>
+        <dnd-form-input
+          [startIcon]="'lock-closed'"
+          [label]="'Password'"
+          [placeholder]="'password'"
+          [type]="data.showPassword ? 'text' : 'password'"
+          [endIcon]="data.showPassword ? 'eye-off' : 'eye'"
+          (valueChange)="updateForm('password', $event)"
+          (endIconClicked)="toggleShowPassword()"
+        ></dnd-form-input>
+      </div>
+      <ion-button
+        class="login-button"
+        type="submit"
+        [disabled]="!loginForm.valid"
+        size="small"
+        shape="round"
+        color="primary"
+        ><span class="login-button-text">Login</span></ion-button
+        >
+      </div>
+    </form>
+  }

@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { Nullable } from '@models/nullable';
@@ -11,7 +11,7 @@ import { RightToolbarTools } from 'src/app/pages/main-page/components/game/compo
   selector: 'dnd-toolbar-item',
   templateUrl: './toolbar-item.component.html',
   styleUrls: ['./toolbar-item.component.scss'],
-  imports: [NgIf, NgClass, IonIcon],
+  imports: [NgClass, IonIcon],
 })
 export class ToolbarItemComponent {
   @Input() public toolbarAction: Nullable<ToolbarAction>;
