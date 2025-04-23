@@ -1,3 +1,3 @@
-export function isStrictDefined(object: any): boolean {
+export function isDefined(object: any): boolean {
   return object !== undefined && object !== null;
 }

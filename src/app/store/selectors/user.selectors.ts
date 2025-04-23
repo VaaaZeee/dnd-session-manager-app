@@ -1,4 +1,9 @@
-import { User } from '@models/user';
-import { createFeatureSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { UserState } from '@store/states/user.state';
 
-export const currentUser = createFeatureSelector<User>('user');
+export const selectUserState = createFeatureSelector<UserState>('user');
+
+export const selectCurrentUser = createSelector(
+  selectUserState,
+  (state) => state.user
+);

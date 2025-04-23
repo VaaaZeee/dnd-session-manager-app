@@ -2,30 +2,22 @@
   <ion-item>
     <ion-input
       labelPlacement="stacked"
-      [label]="label"
       [type]="type"
+      [label]="label"
       [placeholder]="placeholder"
+      [clearInput]="clearInput"
       (ionInput)="inputValueChange($event.detail.value ?? '')"
-      >
+    >
       @if (startIcon) {
+      <ion-icon slot="start" [name]="startIcon" aria-hidden="true"></ion-icon>
+      } @if (endIcon) {
+      <ion-button fill="clear" slot="end" (click)="endIconClicked.next()">
         <ion-icon
-          slot="start"
-          [name]="startIcon"
+          slot="icon-only"
+          [name]="endIcon"
           aria-hidden="true"
         ></ion-icon>
-      }
-      @if (endIcon) {
-        <ion-button
-          fill="clear"
-          slot="end"
-          (click)="endIconClicked.next()"
-          >
-          <ion-icon
-            slot="icon-only"
-            [name]="endIcon"
-            aria-hidden="true"
-          ></ion-icon>
-        </ion-button>
+      </ion-button>
       }
     </ion-input>
   </ion-item>

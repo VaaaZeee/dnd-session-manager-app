@@ -10,7 +10,7 @@ export const GROUP_MANAGER_ROUTES: Route[] = [
     path: '',
     component: GroupManagerComponent,
     providers: [
-      provideEffects(GroupEffects),
+      provideEffects([GroupEffects]),
       provideState('groups', groupsReducer),
     ],
   },

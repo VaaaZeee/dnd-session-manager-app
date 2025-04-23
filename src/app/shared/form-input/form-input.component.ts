@@ -1,4 +1,3 @@
-
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,10 +16,25 @@ import {
 } from '@ionic/angular/standalone';
 import { Nullable } from '@models/nullable';
 import { addIcons } from 'ionicons';
-import { eye, eyeOff, lockClosed, mail, person } from 'ionicons/icons';
+import {
+  closeOutline,
+  eye,
+  eyeOff,
+  lockClosed,
+  mail,
+  person,
+  searchOutline,
+} from 'ionicons/icons';
 import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
 
-type IconTypes = 'mail' | 'person' | 'lock-closed' | 'eye' | 'eye-off';
+type IconTypes =
+  | 'mail'
+  | 'person'
+  | 'lock-closed'
+  | 'eye'
+  | 'eye-off'
+  | 'search-outline'
+  | 'close-outline';
 
 @Component({
   selector: 'dnd-form-input',
@@ -31,10 +45,11 @@ type IconTypes = 'mail' | 'person' | 'lock-closed' | 'eye' | 'eye-off';
 })
 export class FormInputComponent implements OnInit, OnDestroy {
   @Input() type: string = 'text';
+  @Input() clearInput: Nullable<boolean>;
   @Input() label: string = '';
   @Input() placeholder: Nullable<string>;
   @Input() startIcon: Nullable<IconTypes>;
-  @Input() endIcon: Nullable<string>;
+  @Input() endIcon: Nullable<IconTypes>;
   @Output() endIconClicked = new EventEmitter<void>();
   @Output() valueChange = new EventEmitter<string>();
 
@@ -42,7 +57,15 @@ export class FormInputComponent implements OnInit, OnDestroy {
   private valueChange$ = new Subject<string>();
 
   constructor() {
-    addIcons({ mail, person, lockClosed, eye, eyeOff });
+    addIcons({
+      mail,
+      person,
+      lockClosed,
+      eye,
+      eyeOff,
+      searchOutline,
+      closeOutline,
+    });
   }
 
   public ngOnInit(): void {

@@ -1,0 +1,7 @@
+@use "variables" as *;
+
+:host {
+  border-radius: $borderRadius;
+  padding: 2px;
+  border: 2px solid $primaryColor;
+}

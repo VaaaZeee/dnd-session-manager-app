@@ -1,0 +1,5 @@
+@for (group of groups; track group.id) {
+<dnd-group-tile [group]="group"></dnd-group-tile>
+} @empty {
+<dnd-no-groups></dnd-no-groups>
+}

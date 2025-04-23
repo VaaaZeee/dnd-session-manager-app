@@ -8,6 +8,6 @@ export const groupsReducer = createReducer<GroupsState>(
   initialState,
   on(fetchingGroupsSuccesAction, (state, { groups }) => ({
     ...state,
-    ...groups,
+    groups,
   }))
 );

@@ -27,7 +27,7 @@
       justify-content: center;
       padding-bottom: 1rem;
       .title {
-        font-size: 3rem;
+        font-size: $fontSize-xl;
       }
     }
 
@@ -42,7 +42,7 @@
 
       .registration-button-text {
         font-weight: 600;
-        font-size: 1rem;
+        font-size: $fontSize-xs;
         padding: 0.5rem 0;
       }
     }

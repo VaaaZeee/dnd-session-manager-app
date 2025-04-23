@@ -1,3 +1,8 @@
-<p>
-  group-manager works!
-</p>
+@let groups = groups$ | async;
+
+@if (groups?.length || (searchTerm$ | async)) {
+  <dnd-search-bar (searchTermChanged)="searchTermChanged($event)"></dnd-search-bar>
+}
+
+<dnd-group-tiles [groups]="groups"></dnd-group-tiles>
+<dnd-button class="primary" [icon]="'add-outline'">Create group</dnd-button>

@@ -1,0 +1,18 @@
+@use "variables" as *;
+
+:host-context(.transparent) {
+  ion-list,
+  ion-item,
+  ion-input {
+    --background: transparent;
+    background: transparent;
+  }
+
+  ion-icon {
+    color: $fontColor;
+  }
+}
+
+ion-icon {
+  --ionicon-stroke-width: 3rem;
+}

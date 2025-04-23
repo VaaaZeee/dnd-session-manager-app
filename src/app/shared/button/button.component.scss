@@ -1,0 +1,18 @@
+@use "variables" as *;
+
+:host-context(.primary) {
+  span {
+    margin: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    font-weight: 600;
+    font-size: $fontSize-s;
+  }
+
+  ion-icon {
+    font-size: $fontSize-s;
+    --ionicon-stroke-width: 5rem;
+  }
+}

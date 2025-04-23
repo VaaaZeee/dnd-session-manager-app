@@ -5,7 +5,7 @@ import {
   userRegistrationFailAction,
   userRegistrationSuccessAction,
 } from '@store/actions/user.actions';
-import { isStrictDefined } from '@utils/is-strict-defined.utils';
+import { isDefined } from '@utils/is-strict-defined.utils';
 import { catchError, filter, map, of, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 
@@ -22,7 +22,7 @@ export class RegisterEffects {
       switchMap(({ email, password, userName }) =>
         this.authService.registerUser(email, password, userName)
       ),
-      filter(isStrictDefined),
+      filter(isDefined),
       map((user) => userRegistrationSuccessAction({ user })),
       catchError(() => of(userRegistrationFailAction()))
     );

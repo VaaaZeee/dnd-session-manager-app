@@ -15,7 +15,7 @@
     @include prevent-select;
     display: flex;
     align-items: flex-start;
-    font-size: 2rem;
+    font-size: $fontSize-l;
     margin-bottom: 0.5rem;
 
     .group-message {

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { currentUser } from '@store/selectors/user.selectors';
-import { map, switchMap } from 'rxjs';
+import { selectCurrentUser } from '@store/selectors/user.selectors';
+import { isDefined } from '@utils/is-strict-defined.utils';
+import { filter, map, switchMap } from 'rxjs';
 import { GroupManagerService } from 'src/app/pages/main-page/components/group-manager/services/group-manager.service';
 import {
   fetchingGroupsSuccesAction,
@@ -25,8 +26,10 @@ export class GroupEffects implements OnInitEffects {
   fetchGroups$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(startFetchingGroupsAction),
-      concatLatestFrom(() => this.store.select(currentUser)),
-      switchMap(([_, user]) => this.groupManagerService.getGroups(user)),
+      concatLatestFrom(() => this.store.select(selectCurrentUser)),
+      map(([_, user]) => user),
+      filter(isDefined),
+      switchMap((user) => this.groupManagerService.getGroups(user)),
       map((groups) => fetchingGroupsSuccesAction({ groups }))
     );
   });
