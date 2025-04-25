@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import { Nullable } from '@models/nullable';
 import { addIcons } from 'ionicons';
@@ -15,6 +15,7 @@ type IconTypes = 'add-outline';
 })
 export class ButtonComponent {
   @Input() icon: Nullable<IconTypes>;
+  @Output() clicked = new EventEmitter();
 
   constructor() {
     addIcons({ addOutline });

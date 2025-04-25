@@ -25,4 +25,8 @@ export class GroupManagerComponent {
   protected searchTermChanged(searchTerm: string): void {
     this.searchTerm$.next(searchTerm);
   }
+
+  protected createGroupClicked(): void {
+    this.groupManagerFacade.openCreateGroup();
+  }
 }

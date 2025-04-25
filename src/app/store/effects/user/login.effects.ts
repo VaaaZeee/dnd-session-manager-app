@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '@core/services/auth/auth.service';
+import { AuthService } from '@core/services/auth.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   logoutUserAction,
@@ -22,11 +22,9 @@ export class LoginEffects {
   loginUser$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(startLoginUserAction),
-      switchMap(({ email, password }) =>
-        this.authService.loginWithEmailAndPassword(email, password)
-      ),
-      map((user) => userLoginSuccessAction({ user })),
-      catchError((error) => {
+      switchMap(({ email, password }) => this.authService.loginWithEmailAndPassword(email, password)),
+      map(user => userLoginSuccessAction({ user })),
+      catchError(error => {
         console.log(error);
         return of(userLoginFailAction());
       })
@@ -36,10 +34,8 @@ export class LoginEffects {
   autoLoginUser$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(startUserAutoLoginAction),
-      switchMap(({ email, password }) =>
-        this.authService.loginWithEmailAndPassword(email, password)
-      ),
-      map((user) => userAutoLoginSuccessAction({ user })),
+      switchMap(({ email, password }) => this.authService.loginWithEmailAndPassword(email, password)),
+      map(user => userAutoLoginSuccessAction({ user })),
       catchError(() => of(userAutoLoginFailAction()))
     );
   });

@@ -5,4 +5,4 @@
 }
 
 <dnd-group-tiles [groups]="groups"></dnd-group-tiles>
-<dnd-button class="primary" [icon]="'add-outline'">Create group</dnd-button>
+<dnd-button class="primary" [icon]="'add-outline'" (clicked)="createGroupClicked()">Create group</dnd-button>

@@ -1,21 +1,12 @@
 import { Injectable, isDevMode } from '@angular/core';
-import {
-  Auth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { User } from '@models/user';
 import { Store } from '@ngrx/store';
-import {
-  startUserAutoLoginAction,
-  userAutoLoginFailAction,
-  userAutoLoginSuccessAction,
-} from '@store/actions/user.actions';
+import { startUserAutoLoginAction, userAutoLoginFailAction, userAutoLoginSuccessAction } from '@store/actions/user.actions';
 import { delay, Observable, of, tap } from 'rxjs';
 import { PAGES } from 'src/app/app-route-enums';
-import { UserUtil } from './../../../utils/user.utils';
+import { UserUtil } from '../../utils/user.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -31,16 +22,8 @@ export class AuthService {
     return !!this.auth.currentUser;
   }
 
-  public async registerUser(
-    email: string,
-    password: string,
-    userName: string
-  ): Promise<User> {
-    const user = await createUserWithEmailAndPassword(
-      this.auth,
-      email,
-      password
-    ).then(({ user }) => {
+  public async registerUser(email: string, password: string, userName: string): Promise<User> {
+    const user = await createUserWithEmailAndPassword(this.auth, email, password).then(({ user }) => {
       if (!user) {
         throw new Error('The account could not be created');
       }
@@ -51,15 +34,8 @@ export class AuthService {
     return UserUtil.mapFirebaseUser(user);
   }
 
-  public async loginWithEmailAndPassword(
-    email: string,
-    password: string
-  ): Promise<User> {
-    const user = await signInWithEmailAndPassword(
-      this.auth,
-      email,
-      password
-    ).then(({ user }) => {
+  public async loginWithEmailAndPassword(email: string, password: string): Promise<User> {
+    const user = await signInWithEmailAndPassword(this.auth, email, password).then(({ user }) => {
       if (!user) {
         throw new Error('User not found');
       }
@@ -77,7 +53,7 @@ export class AuthService {
         this.removeUserDataFromLocalStorage();
         this.router.navigateByUrl(`/${PAGES.LOGIN}`);
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }
 
   private setDevAutoLogin(email: string, password: string): void {
@@ -105,7 +81,7 @@ export class AuthService {
     }
 
     return of(this.auth.currentUser).pipe(
-      tap((currentUser) => {
+      tap(currentUser => {
         if (currentUser) {
           this.store.dispatch(
             userAutoLoginSuccessAction({

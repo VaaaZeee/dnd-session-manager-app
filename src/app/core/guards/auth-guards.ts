@@ -1,17 +1,9 @@
 import { inject } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivateFn,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { PAGES } from 'src/app/app-route-enums';
-import { AuthService } from '../services/auth/auth.service';
+import { AuthService } from '../services/auth.service';
 
-export const authGuard: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-): boolean => {
+export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
   const router = inject(Router);
   const isAuthenticated = inject(AuthService).isAuthenticated();
   if (!isAuthenticated) {
@@ -20,10 +12,7 @@ export const authGuard: CanActivateFn = (
   return isAuthenticated;
 };
 
-export const loggedOutGuard: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-): boolean => {
+export const loggedOutGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
   const router = inject(Router);
   const isAuthenticated = inject(AuthService).isAuthenticated();
   if (isAuthenticated) {
