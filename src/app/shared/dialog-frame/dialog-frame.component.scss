@@ -1,4 +1,22 @@
-.wrapper {
+:host {
   height: 100%;
-  width: 100%;
+}
+
+:host-context(.confirm-dialog) {
+  .content-wrapper {
+    height: 75%;
+  }
+}
+
+.content-wrapper {
+  height: 100%;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.confirm-action-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 1rem 1rem 1rem;
 }

@@ -1,1 +1,18 @@
-<dnd-dialog-frame [title]="title"></dnd-dialog-frame>
+<dnd-dialog-frame [title]="title" (cancelClicked)="closeDialog()">
+  <form [formGroup]="createGroupForm" (ngSubmit)="submitCreateGroupForm()">
+    <div class="input-container">
+      <dnd-form-input
+        [startIcon]="'people-outline'"
+        [label]="'Group name'"
+        [type]="'text'"
+        [placeholder]="'Group'"
+        (valueChange)="updateForm('name', $event)"></dnd-form-input>
+      <dnd-icon-selector (selectedIconChanged)="updateForm('icon', $event)"></dnd-icon-selector>
+    </div>
+    <div class="action-container">
+      <ion-button [disabled]="!createGroupForm.valid" type="submit" class="registration-button" shape="round">
+        <span class="registration-button-text">Create Group</span>
+      </ion-button>
+    </div>
+  </form>
+</dnd-dialog-frame>

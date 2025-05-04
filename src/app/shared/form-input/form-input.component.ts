@@ -1,40 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  IonButton,
-  IonIcon,
-  IonInput,
-  IonItem,
-  IonList,
-} from '@ionic/angular/standalone';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { IonButton, IonIcon, IonInput, IonItem, IonList } from '@ionic/angular/standalone';
 import { Nullable } from '@models/nullable';
 import { addIcons } from 'ionicons';
-import {
-  closeOutline,
-  eye,
-  eyeOff,
-  lockClosed,
-  mail,
-  person,
-  searchOutline,
-} from 'ionicons/icons';
+import { closeOutline, eye, eyeOff, lockClosed, mail, peopleOutline, person, searchOutline } from 'ionicons/icons';
 import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
 
-type IconTypes =
-  | 'mail'
-  | 'person'
-  | 'lock-closed'
-  | 'eye'
-  | 'eye-off'
-  | 'search-outline'
-  | 'close-outline';
+type IconTypes = 'mail' | 'person' | 'lock-closed' | 'eye' | 'eye-off' | 'search-outline' | 'close-outline' | 'people-outline';
 
 @Component({
   selector: 'dnd-form-input',
@@ -65,6 +36,7 @@ export class FormInputComponent implements OnInit, OnDestroy {
       eyeOff,
       searchOutline,
       closeOutline,
+      peopleOutline,
     });
   }
 
@@ -74,7 +46,7 @@ export class FormInputComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         debounceTime(200),
-        tap((value) => this.valueChange.emit(value))
+        tap(value => this.valueChange.emit(value))
       )
       .subscribe();
   }

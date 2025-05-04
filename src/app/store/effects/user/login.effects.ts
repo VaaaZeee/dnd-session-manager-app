@@ -25,7 +25,6 @@ export class LoginEffects {
       switchMap(({ email, password }) => this.authService.loginWithEmailAndPassword(email, password)),
       map(user => userLoginSuccessAction({ user })),
       catchError(error => {
-        console.log(error);
         return of(userLoginFailAction());
       })
     );

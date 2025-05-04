@@ -1,9 +1,10 @@
-@use "variables" as *;
+@use 'variables' as *;
 
 .group-tile {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 0.25rem;
   width: 12rem;
   height: 6rem;
   border-radius: $borderRadius;

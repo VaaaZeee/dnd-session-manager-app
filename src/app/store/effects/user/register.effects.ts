@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from '@core/services/auth.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { startRegisterUserAction, userRegistrationFailAction, userRegistrationSuccessAction } from '@store/actions/user.actions';
-import { isDefined } from '@utils/is-strict-defined.utils';
+import { isDefined } from '@utils/is-defined.utils';
 import { catchError, filter, map, of, switchMap } from 'rxjs';
 
 @Injectable()

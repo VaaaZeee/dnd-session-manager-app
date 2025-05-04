@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Group } from '@models/group';
 import { Nullable } from '@models/nullable';
-import { addIcons } from 'ionicons';
-import { peopleOutline } from 'ionicons/icons';
 import { GroupTileComponent } from './components/group-tile/group-tile.component';
 import { NoGroupsComponent } from './components/no-groups/no-groups.component';
 
@@ -15,8 +13,4 @@ import { NoGroupsComponent } from './components/no-groups/no-groups.component';
 })
 export class GroupTilesComponent {
   @Input({ required: true }) public groups: Nullable<Group[]>;
-
-  constructor() {
-    addIcons({ peopleOutline });
-  }
 }

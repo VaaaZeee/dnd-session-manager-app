@@ -9,6 +9,10 @@ export abstract class Dialog {
     return this.modalController.dismiss(null, 'cancel');
   }
 
+  public close(result: any) {
+    return this.modalController.dismiss(result, 'close');
+  }
+
   public confirm(result: any) {
     return this.modalController.dismiss(result, 'confirm');
   }

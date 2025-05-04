@@ -1,36 +1,17 @@
-@if (!$isMobile()) {
-  <ion-modal
-    ><ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button (click)="cancelClicked.emit()">Cancel</ion-button>
-        </ion-buttons>
-        <ion-title>{{ title }}</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="confirmClicked.emit()" [strong]="true">Confirm</ion-button>
-        </ion-buttons>
-      </ion-toolbar> </ion-header
-    ><ng-content></ng-content
-  ></ion-modal>
-} @else {
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button (click)="cancelClicked.emit()">Cancel</ion-button>
-      </ion-buttons>
-      <ion-title>{{ title }}</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="confirmClicked.emit()" [strong]="true">Confirm</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ng-content></ng-content>
-  </ion-content>
-}
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelClicked.emit()"><ion-icon slot="icon-only" name="close-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-<ng-template #content>
-  <div class="wrapper">
-    <h1>{{ title }}</h1>
+<div class="content-wrapper">
+  <ng-content></ng-content>
+</div>
+@if (isConfirmDialog) {
+  <div class="confirm-action-container">
+    <ion-button strong="true" shape="round" (click)="confirmClicked.emit()">Confirm</ion-button>
   </div>
-</ng-template>
+}

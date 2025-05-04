@@ -2,7 +2,7 @@ export interface Group {
   id: string;
   name: string;
   owner: string;
-  icon?: string;
+  icon: string;
   userIds?: string[];
   canEdit?: string[];
 }

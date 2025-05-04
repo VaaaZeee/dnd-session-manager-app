@@ -1,0 +1,9 @@
+<div class="label">Icon selector</div>
+
+<div class="icon-container">
+  @for (icon of icons; track icon) {
+    <button type="button" class="icon-element" [class.selected]="(currentSelectedIcon$ | async) === icon" (click)="selectIcon(icon)">
+      <ion-icon [name]="icon" size="large"></ion-icon>
+    </button>
+  }
+</div>
